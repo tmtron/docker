@@ -6,6 +6,12 @@ to build the images just start the `build-ALL.bash` script.
 
 Then you can use `./idea.bash` to start the IDE
 
+if you want to have a Launcher icon on the Desktop use
+```
+gnome-desktop-item-edit --create-new .
+```
+and select the `idea.bash` script as Command.
+
 there are 3 docker images:
  - ubuntu-openjdk: uses a public ubuntu image and installs the open JDK
  - intellij: uses the ubuntu-openjdk image and installs the intellij IDE
