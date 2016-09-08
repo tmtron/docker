@@ -9,7 +9,7 @@ docker run \
   -v $XSOCK:$XSOCK \
   -v /home/$USER:/home/$USER \
   -e DISPLAY \
-  -e ANDROID_HOME \ 
+  -e ANDROID_HOME \
   -d \
   idea \
   /opt/intellij/bin/idea.sh
