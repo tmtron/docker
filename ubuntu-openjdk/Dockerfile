@@ -19,3 +19,5 @@ RUN add-apt-repository ppa:webupd8team/java && apt-get update \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& rm -rf /tmp/*
+
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64	

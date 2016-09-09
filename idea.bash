@@ -3,7 +3,13 @@
 # bash: starts the bash shell
 # else: starts IntelliJ Idea 
 MODE=bashX
+# set this to true to share the complete home-dir
+USE_HOST_HOME_DIR=false
+# set this to true to share Android
 USE_HOST_ANDROID=true
+# set this to true to share the Idea config
+USE_HOST_IDEA_CONFIG=true
+# set this to true to share the maven repository
 USE_HOST_MAVEN_REPO=true
 
 VOLUME_MOUNT_PARAMS=
@@ -21,7 +27,12 @@ addMountDir () {
     echo addMountDir: parameter is required!
     exit 1
   fi  
-  VOLUME_MOUNT_PARAMS="$VOLUME_MOUNT_PARAMS -v $1:$1"
+  if [ -z "${2// }" ]; then
+    CONTAINER_DIR=$1
+  else
+    CONTAINER_DIR=$2
+  fi  
+  VOLUME_MOUNT_PARAMS="$VOLUME_MOUNT_PARAMS -v $1:$CONTAINER_DIR"
 }
 
 # will append a volume mount direction to the VOLUME_MOUNT_PARAMS variable
@@ -51,7 +62,10 @@ DOCKER_ENV_VARS=
 if [ "$USE_HOST_ANDROID" = true ]; then
   DOCKER_ENV_VARS='-e ANDROID_HOME'
   addMountInHomeDir ".android"
-  addMountDir "$ANDROID_HOME"
+  addMountInHomeDir "android-sdk-linux"
+fi
+
+if [ "$USE_HOST_IDEA_CONFIG" = true ]; then  
   # try to find the hidden Idea directory for the settings in the users
   # home directory
   # the directory name may be e.g. ".IdeaIC2016.2"
@@ -70,11 +84,14 @@ if [ "$USE_HOST_MAVEN_REPO" = true ]; then
   addMountInHomeDir ".m2"
 fi
 
+if [ "$USE_HOST_HOME_DIR" = true ]; then
+  echo sharing full home-directory  
+  addMountDir "/home/$USER"
+fi
 # if no mounts have been set, we mount the complete home-directory
 # see http://unix.stackexchange.com/a/146945
 if [ -z "${VOLUME_MOUNT_PARAMS// }" ]; then
-  echo sharing full home-directory  
-  addMountDir "/home/$USER"
+  echo no directories shared  
 fi
 
 #echo $VOLUME_MOUNT_PARAMS && exit
@@ -99,12 +116,13 @@ DOCKER_ENV_VARS="-e DISPLAY $DOCKER_ENV_VARS"
 # when you want to run e.g. bash directly (instead of idea.sh), you must remove the -d switch and add: 
 #  -t alocate a pseudo-tty
 #  -i interactive: keep STDIN open iven if not attached
+DOCKER_IMAGE_NAME=intellij-android
 docker run \
   -v $XSOCK:$XSOCK \
   $DOCKER_ENV_VARS \
   $VOLUME_MOUNT_PARAMS  \
   $DETACHED_FOREGROUND \
-  idea \
+  $DOCKER_IMAGE_NAME \
   $CMD
 
 

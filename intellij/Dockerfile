@@ -2,7 +2,8 @@ FROM ubuntu-openjdk
 
 MAINTAINER martin@tmtron.com
 
-ENV INTELLIJ_URL=https://download-cf.jetbrains.com/idea/ideaIC-2016.2.3.tar.gz
+ARG INTELLIJ_VERSION
+ARG INTELLIJ_URL=https://download-cf.jetbrains.com/idea/ideaIC-${INTELLIJ_VERSION}.tar.gz
 
 # install wget
 # download intellij archive

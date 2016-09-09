@@ -11,6 +11,8 @@ ARG groupId
 ARG groupName
 ARG userId
 ARG userName
+ARG ANDROID_SDK_VERSION=24.4.1
+ARG ANDROID_SDK_URL=https://dl.google.com/android/android-sdk_r${ANDROID_SDK_VERSION}-linux.tgz
 
 # install sudo
 # install git version control
@@ -20,6 +22,10 @@ RUN apt-get update \
   && apt-get -y install sudo \
   && apt-get -y install git \
   && apt-get -y install maven
+
+ENV M2_HOME=/usr/share/maven
+ENV M2=$M2_HOME/bin
+#ENV PATH=$M2:$PATH
 
 # * create a group in the container
 # * create the user in the container
@@ -33,4 +39,11 @@ RUN groupadd --gid $groupId $groupName \
 # switch to that user and workdir
 USER $userName
 WORKDIR /home/$userName/
+
+# install android SDK
+RUN wget --progress=bar:force $ANDROID_SDK_URL \
+  && tar -xzf android-sdk_r${ANDROID_SDK_VERSION}-linux.tgz \
+  && rm android-sdk_r${ANDROID_SDK_VERSION}-linux.tgz 
+
+ENV ANDROID_HOME=/home/$userName/android-sdk-linux 
 
