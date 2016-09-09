@@ -14,11 +14,12 @@ ARG userName
 
 # install sudo
 # install git version control
+# install maven
+#   note: maven is bundled in Idea, but we want the newest version 
 RUN apt-get update \
   && apt-get -y install sudo \
-  && apt-get -y install git 
-# no need to install maven: it is bundled in Idea
-#  && apt-get -y install maven
+  && apt-get -y install git \
+  && apt-get -y install maven
 
 # * create a group in the container
 # * create the user in the container
