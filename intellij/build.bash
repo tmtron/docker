@@ -1,6 +1,6 @@
 #!/bin/bash
 IMAGE_NAME=intellij
-TAG=2016.2.3
+TAG=2016.2.4
 IMAGE_TAG=$IMAGE_NAME:$TAG
 
 docker build \
