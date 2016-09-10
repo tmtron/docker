@@ -60,7 +60,6 @@ addMountInHomeDir () {
 
 DOCKER_ENV_VARS=
 if [ "$USE_HOST_ANDROID" = true ]; then
-  DOCKER_ENV_VARS='-e ANDROID_HOME'
   addMountInHomeDir ".android"
   addMountInHomeDir "android-sdk-linux"
 fi
