@@ -11,6 +11,8 @@ USE_HOST_ANDROID=true
 USE_HOST_IDEA_CONFIG=true
 # set this to true to share the maven repository
 USE_HOST_MAVEN_REPO=true
+# set this to true to share the GIT config
+USE_HOST_GIT_CONFIG=true
 
 VOLUME_MOUNT_PARAMS=
 
@@ -81,6 +83,10 @@ fi
 
 if [ "$USE_HOST_MAVEN_REPO" = true ]; then
   addMountInHomeDir ".m2"
+fi
+
+if [ "$USE_HOST_GIT_CONFIG" = true ]; then
+  addMountInHomeDir ".gitconfig"
 fi
 
 if [ "$USE_HOST_HOME_DIR" = true ]; then
