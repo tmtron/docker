@@ -1,8 +1,16 @@
 #!/bin/bash
 
-# bash: starts the bash shell
-# else: starts IntelliJ Idea 
-MODE=bashX
+# check command line argument
+# "bash": starts the bash shell
+# else: starts IntelliJ Idea
+if [ "${1}" == "bash" ]; then
+  DETACHED_FOREGROUND='-it'
+  CMD='/bin/bash'
+else
+  DETACHED_FOREGROUND='-d'
+  CMD='/opt/intellij/bin/idea.sh'
+fi 
+
 # set this to true to share the complete home-dir
 USE_HOST_HOME_DIR=false
 # set this to true to share Android
@@ -17,14 +25,6 @@ USE_HOST_GIT_CONFIG=true
 USE_HOST_GNUPG_CONFIG=true
 
 VOLUME_MOUNT_PARAMS=
-
-if [ $MODE == 'bash' ]; then
-  DETACHED_FOREGROUND='-it'
-  CMD='/bin/bash'
-else
-  DETACHED_FOREGROUND='-d'
-  CMD='/opt/intellij/bin/idea.sh'
-fi
 
 addMountDir () {
   if [ -z "${1// }" ]; then
