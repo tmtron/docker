@@ -17,11 +17,14 @@ ARG ANDROID_SDK_URL=https://dl.google.com/android/android-sdk_r${ANDROID_SDK_VER
 # install sudo
 # install git version control
 # install maven
-#   note: maven is bundled in Idea, but we want the newest version 
+#   note: maven is bundled in Idea, but we want the newest version
+# install gnupg2
+#   this is needed to sign maven artifacts before uploading to maven central 
 RUN apt-get update \
   && apt-get -y install sudo \
   && apt-get -y install git \
-  && apt-get -y install maven
+  && apt-get -y install maven \
+  && apt-get -y install gnupg2
 
 ENV M2_HOME=/usr/share/maven
 ENV M2=$M2_HOME/bin

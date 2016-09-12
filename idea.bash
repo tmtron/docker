@@ -13,6 +13,8 @@ USE_HOST_IDEA_CONFIG=true
 USE_HOST_MAVEN_REPO=true
 # set this to true to share the GIT config
 USE_HOST_GIT_CONFIG=true
+# set this to true to share the gnupg info 
+USE_HOST_GNUPG_CONFIG=true
 
 VOLUME_MOUNT_PARAMS=
 
@@ -89,10 +91,15 @@ if [ "$USE_HOST_GIT_CONFIG" = true ]; then
   addMountInHomeDir ".gitconfig"
 fi
 
+if [ "$USE_HOST_GNUPG_CONFIG" = true ]; then
+  addMountInHomeDir ".gnupg"
+fi
+
 if [ "$USE_HOST_HOME_DIR" = true ]; then
   echo sharing full home-directory  
   addMountDir "/home/$USER"
 fi
+
 # if no mounts have been set, we mount the complete home-directory
 # see http://unix.stackexchange.com/a/146945
 if [ -z "${VOLUME_MOUNT_PARAMS// }" ]; then
