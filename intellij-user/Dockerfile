@@ -23,6 +23,7 @@ ARG ANDROID_SDK_URL=https://dl.google.com/android/android-sdk_r${ANDROID_SDK_VER
 RUN apt-get update \
   && apt-get -y install sudo \
   && apt-get -y install git \
+  && apt-get -y install git-flow \
   && apt-get -y install maven \
   && apt-get -y install gnupg2
 
