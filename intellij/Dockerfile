@@ -1,4 +1,4 @@
-FROM ubuntu-openjdk
+FROM ubuntu-oraclejdk
 
 MAINTAINER martin@tmtron.com
 

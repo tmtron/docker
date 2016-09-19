@@ -1,5 +1,5 @@
 #!/bin/bash
 
-./ubuntu-openjdk/build.bash \
+./ubuntu-oraclejdk/build.bash \
  && ./intellij/build.bash \
  && ./intellij-user/build.bash

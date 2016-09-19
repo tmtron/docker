@@ -45,9 +45,11 @@ USER $userName
 WORKDIR /home/$userName/
 
 # install android SDK
-RUN wget --progress=bar:force $ANDROID_SDK_URL \
-  && tar -xzf android-sdk_r${ANDROID_SDK_VERSION}-linux.tgz \
-  && rm android-sdk_r${ANDROID_SDK_VERSION}-linux.tgz 
+# RUN wget --progress=bar:force $ANDROID_SDK_URL \
+#   && tar -xzf android-sdk_r${ANDROID_SDK_VERSION}-linux.tgz \
+#   && rm android-sdk_r${ANDROID_SDK_VERSION}-linux.tgz 
 
-ENV ANDROID_HOME=/home/$userName/android-sdk-linux 
-
+ENV ANDROID_HOME=/home/$userName/android-sdk-linux
+# make sure that IntelliJ Idea uses the JDK in the container
+# otherwise we may see strange errors when trying to start the IDE
+ENV IDEA_JDK=$JAVA_HOME

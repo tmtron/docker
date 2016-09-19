@@ -1,5 +1,5 @@
 #!/bin/bash
-IMAGE_NAME=intellij-android
+IMAGE_NAME=intellij-user
 ANDROID_SDK_VERSION=24.4.1 
 TAG=$ANDROID_SDK_VERSION
 IMAGE_TAG=$IMAGE_NAME:$TAG
@@ -13,5 +13,10 @@ docker build \
   -t $IMAGE_TAG \
   intellij-user
 
-docker tag $IMAGE_TAG $IMAGE_NAME:latest
+if [ $? -eq 0 ]; then
+    docker tag $IMAGE_TAG $IMAGE_NAME:latest
+else
+    echo FAILED TO BUILD DOCKER IMAGE
+fi  
+
 

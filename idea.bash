@@ -80,7 +80,9 @@ if [ "$USE_HOST_IDEA_CONFIG" = true ]; then
   addMountInHomeDir "$IdeaHiddenDir"
   addMountInHomeDir "IdeaProjects"
   # otherwise the IDE will always ask to accept the Terms and Conditions
-  addMountInHomeDir ".java/.userPrefs/jetbrains"
+  # note: Idea will create some hidden lock files in this directory
+  #       and also store/update the prefs.xml file
+  addMountInHomeDir ".java/.userPrefs/"
 fi
 
 if [ "$USE_HOST_MAVEN_REPO" = true ]; then
@@ -128,7 +130,7 @@ DOCKER_ENV_VARS="-e DISPLAY $DOCKER_ENV_VARS"
 # when you want to run e.g. bash directly (instead of idea.sh), you must remove the -d switch and add: 
 #  -t alocate a pseudo-tty
 #  -i interactive: keep STDIN open iven if not attached
-DOCKER_IMAGE_NAME=intellij-android
+DOCKER_IMAGE_NAME=intellij-user
 docker run \
   -v $XSOCK:$XSOCK \
   $DOCKER_ENV_VARS \
