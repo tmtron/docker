@@ -4,6 +4,9 @@
 # "bash": starts the bash shell
 # else: starts IntelliJ Idea
 if [ "${1}" == "bash" ]; then
+  # when you want to run e.g. bash directly (instead of idea.sh), you must not use the -d switch and add: 
+  #  -t alocate a pseudo-tty
+  #  -i interactive: keep STDIN open even if not attached
   DETACHED_FOREGROUND='-it'
   CMD='/bin/bash'
 else
@@ -126,19 +129,16 @@ DOCKER_ENV_VARS="-e DISPLAY $DOCKER_ENV_VARS"
 #   /opt/intellij/bin/idea.sh
 #
 # -d detach: runs the container in the background and prints out the container id
-#
-# when you want to run e.g. bash directly (instead of idea.sh), you must remove the -d switch and add: 
-#  -t alocate a pseudo-tty
-#  -i interactive: keep STDIN open iven if not attached
+# -p publish a port: we publish port 8080 so that we can access a web-server running
+#                    in the container from the host: i.e. open a browser on the host 
+#                    and navigate to http://localhost:8080/  
 DOCKER_IMAGE_NAME=intellij-user
 docker run \
   -v $XSOCK:$XSOCK \
+  -p 8080:8080 \
   $DOCKER_ENV_VARS \
   $VOLUME_MOUNT_PARAMS  \
   $DETACHED_FOREGROUND \
   $DOCKER_IMAGE_NAME \
   $CMD
-
-
-
 
